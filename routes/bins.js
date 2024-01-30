@@ -1,15 +1,16 @@
-const express = require('express')
-const BinsController = require('../controller/bins')
-const router = express.Router()
+const express = require('express');
+const BinsController = require('../controller/bins');
+const router = express.Router();
 
-router.get('/',BinsController.getUsers)
+// Group bin-related routes under /bins
+router.get('/', BinsController.getBins);
 
-router.get('/:id',BinsController.getUserById)
+router.get('/:id', BinsController.getBinById);
 
-router.post('/',BinsController.createUser)
+router.post('/', BinsController.createBin);
 
-router.put('/:id',BinsController.editUserById)
+router.put('/:id', BinsController.editBinById);
 
-router.delete('/:id',BinsController.deleteUserById)
+router.delete('/:id', BinsController.deleteBinById);
 
-module.exports = router
+module.exports = router;

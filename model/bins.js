@@ -1,20 +1,26 @@
-const mongoose = require('./index')
+const connectToDatabase = require('./index');
+const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-    binName:{
-        type:String,
-        required:[true,"firstName is required"]
+// Establish the database connection
+connectToDatabase();
+
+// Bin Schema
+const binSchema = new mongoose.Schema({
+    binName: {
+        type: String,
+        required: [true, 'Bin name is required'],
     },
-    binLocation:{
-        type:String,
-        required:[true,"lastName is required"]
+    binLocation: {
+        type: String,
+        required: [true, 'Bin location is required'],
     },
-    binColor:{
-        type:String,
-        required:[true,"lastName is required"]
+    binColor: {
+        type: String,
+        required: [true, 'Bin color is required'],
     }
-},{versionKey:false,collection:"bins"})
+}, { versionKey: false, collection: 'bins' });
 
-const userModel = mongoose.model('bins',userSchema)
+// Bin Model
+const binModel = mongoose.model('bins', binSchema);
 
-module.exports = userModel;
+module.exports = binModel;
