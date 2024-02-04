@@ -45,9 +45,9 @@ const getUserById = async (req, res) => {
 
 const createUser = async (req, res) => {
     try {
-        const { firstName, lastName, email, batch, status, password } = req.body;
+        const { firstName, lastName, email, batch, status, password, role } = req.body;
 
-        if (!firstName || !lastName || !email || !batch || !password) {
+        if (!firstName || !lastName || !email || !batch || !password || !role) {
             return handleClientError(res, 'Missing required fields');
         }
 
@@ -64,6 +64,7 @@ const createUser = async (req, res) => {
             email,
             batch,
             status,
+            role,
             password: hashedPassword,
         });
 
@@ -77,7 +78,7 @@ const createUser = async (req, res) => {
 
 const editUserById = async (req, res) => {
     try {
-        const { firstName, lastName, email, batch, status } = req.body;
+        const { firstName, lastName, email, batch, role, status } = req.body;
         const userId = sanitize.isString(req.params.id);
 
         const user = await userModel.findById(userId);
@@ -86,6 +87,7 @@ const editUserById = async (req, res) => {
             user.lastName = lastName;
             user.email = email;
             user.batch = batch;
+            user.role = role;
             user.status = status;
 
             await user.save();
@@ -133,7 +135,7 @@ const loginUser = async (req, res) => {
                     firstName: user.firstName,
                     lastName: user.lastName,
                 });
-                res.status(200).send({ message: 'Login Successful', token });
+                res.status(200).send({ message: 'Login Successful', token, role:user.role });
             } else {
                 handleClientError(res, 'Invalid password');
             }
